@@ -17,7 +17,16 @@ export default function Header() {
         </Link>
       </div>
       
-        {isSignedIn? <UserButton/>:
+        {isSignedIn? (<div className='flex gap-4 items-center'>
+                <Link href='/dashboard'>
+                    <Button variant='outline' className='rounded-full'>
+                        Dashboard
+                    </Button>
+                </Link>
+                <UserButton/>
+            </div>
+          )
+          :
             (<div className='flex gap-4 items-center'>
                 <Link href='/dashboard'>
                     <Button variant='outline' className='rounded-full'>
