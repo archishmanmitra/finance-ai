@@ -21,9 +21,9 @@ export default function DashboardLayout({ children }) {
         .select() 
         .from(Budgets)
         .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress));
-        // if(result?.length === 0){
-        //     router.replace('dashboard/budgets');
-        // }
+        if(result?.length === 0){
+            router.replace('/dashboard/budgets');
+        }
     }
 
     return (
