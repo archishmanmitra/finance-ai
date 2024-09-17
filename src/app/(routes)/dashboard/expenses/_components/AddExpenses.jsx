@@ -11,17 +11,16 @@ const AddExpenses = ({ budgetId, user, refreshData }) => {
     const [amount, setAmount] = useState()
 
     const addNewExpense = async () => {
-        const result = db.insert(Expenses).values({
+        const result = await db.insert(Expenses).values({
             name: name,
             amount: amount,
             budgetId: budgetId,
             createdAt: user?.primaryEmailAddress?.emailAddress,
         }).returning({ insertedId: Budgets.id })
 
-        setAmount("");
-        setName("");
-
         if (result) {
+            setName('')
+            setAmount('')
             refreshData();
             toast('Expense Added Successfully!')
         }
