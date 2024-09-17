@@ -30,11 +30,11 @@ const AddExpenses = ({ budgetId, user, refreshData }) => {
             <h2 className='font-bold text-xl'>Add Expense</h2>
             <div className='mt-2'>
                 <h2 className='text-black font-semibold my-1'>Expense Name</h2>
-                <Input onChange={(e) => setName(e.target.value)} placeholder='example: Phone Bill' />
+                <Input onChange={(e) => setName(e.target.value)} placeholder='example: Phone Bill' suppressHydrationWarning/>
             </div>
             <div className='mt-2'>
                 <h2 className='text-black font-semibold my-1'>Expense Amount</h2>
-                <Input type='number' onChange={(e) => setAmount(e.target.value)} placeholder='example: 300' />
+                <Input type='number' onChange={(e) => setAmount(e.target.value)} placeholder='example: 300' suppressHydrationWarning/>
             </div>
             <Button className='mt-3 w-full' disabled={!(name && amount)} onClick={() => addNewExpense()} >Add New Expense</Button>
         </div>

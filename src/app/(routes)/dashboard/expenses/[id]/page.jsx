@@ -3,13 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { db } from '../../../../../../utils/dbConfig'
 import { Budgets, Expenses } from '../../../../../../utils/schema'
 import { useUser } from '@clerk/nextjs'
-import { eq, getTableColumns, sql } from 'drizzle-orm'
+import { desc, eq, getTableColumns, sql } from 'drizzle-orm'
 import BudgetItem from '../../budgets/_components/BudgetItem'
 import AddExpenses from '../_components/AddExpenses'
+import ExpenseListTable from '../_components/ExpenseListTable'
 
 const ExpensesPage = ({params}) => {
     const {user} = useUser();
     const [budgetInfo, setBudgetInfo] = useState();
+    const [expensesList, setExpensesList] = useState();
     useEffect(() => {
       user&&getBudgetinfo()
       
@@ -25,6 +27,16 @@ const ExpensesPage = ({params}) => {
         .where(eq(Budgets.id, params.id))
         .groupBy(Budgets.id);
         setBudgetInfo(result[0]);
+        getExpensesList();
+    }
+
+    const getExpensesList = async ()=>{
+      const result = await db.select().from(Expenses)
+      .where(eq(Expenses.budgetId,params.id))
+      .orderBy(desc(Expenses.id));
+      console.log(result);
+      
+      setExpensesList(result);
     }
   return (
     <div className='p-10'> 
@@ -35,6 +47,10 @@ const ExpensesPage = ({params}) => {
             <div className="rounded-lg h-[150px] w-full animate-pulse"></div>)
             }
             <AddExpenses budgetId={params.id} user={user} refreshData={()=>getBudgetinfo()}/>
+        </div>
+        <div className='mt-4'>
+          <h2 className='font-bold text-lg'>Latest Expenses</h2>
+          <ExpenseListTable expensesList={expensesList} />
         </div>
     </div>
   )
