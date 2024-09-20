@@ -69,14 +69,14 @@ const CardInfo = ({budgetList, incomeList}) => {
             <div className="flex items-center justify-between p-7 border rounded-2xl">
               <div>
                 <h2 className='text-base'>Total Budget</h2>
-                <h2 className='text-2xl font-bold'>&#8377{formatNumber(totalBudget)}</h2>
+                <h2 className='text-2xl font-bold'>₹ {formatNumber(totalBudget)}</h2>
               </div>
               <PiggyBank className='bg-primary p-3 h-12 w-12 rounded-full text-white'/>
             </div>
             <div className="flex items-center justify-between p-7 border rounded-2xl">
               <div>
                 <h2 className='text-base'>Total Spent</h2>
-                <h2 className='text-2xl font-bold'>&#8377{formatNumber(totalSpent)}</h2>
+                <h2 className='text-2xl font-bold'>₹ {formatNumber(totalSpent)}</h2>
               </div>
               <ReceiptText className='bg-primary p-3 h-12 w-12 rounded-full text-white'/>
             </div>
@@ -90,7 +90,7 @@ const CardInfo = ({budgetList, incomeList}) => {
             <div className="flex items-center justify-between p-7 border rounded-2xl">
               <div>
                 <h2 className='text-base'>Sum of Income Streams</h2>
-                <h2 className='text-2xl font-bold'>&#8377{formatNumber(totalIncome)}</h2>
+                <h2 className='text-2xl font-bold'>₹ {formatNumber(totalIncome)}</h2>
               </div>
               <CircleDollarSign className='bg-primary p-3 h-12 w-12 rounded-full text-white'/>
             </div>     

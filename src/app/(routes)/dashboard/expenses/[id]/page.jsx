@@ -12,6 +12,7 @@ const ExpensesPage = ({params}) => {
     const {user} = useUser();
     const [budgetInfo, setBudgetInfo] = useState();
     const [expensesList, setExpensesList] = useState();
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
       user&&getBudgetinfo()
       
@@ -31,12 +32,14 @@ const ExpensesPage = ({params}) => {
     }
 
     const getExpensesList = async ()=>{
+      setIsLoading(true);
       const result = await db.select().from(Expenses)
       .where(eq(Expenses.budgetId,params.id))
       .orderBy(desc(Expenses.id));
       console.log(result);
       
       setExpensesList(result);
+      setIsLoading(false);
     }
   return (
     <div className='p-10'> 
@@ -50,7 +53,11 @@ const ExpensesPage = ({params}) => {
         </div>
         <div className='mt-4'>
           <h2 className='font-bold text-lg'>Latest Expenses</h2>
+          {isLoading ? (
+          <p>Loading expenses...</p>
+        ) : (
           <ExpenseListTable expensesList={expensesList} />
+        )}
         </div>
     </div>
   )

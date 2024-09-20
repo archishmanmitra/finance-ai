@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { db } from '../../../../../../utils/dbConfig';
 import { Budgets, Expenses } from '../../../../../../utils/schema';
 import { toast } from 'sonner';
+import moment from 'moment';
 
 const AddExpenses = ({ budgetId, user, refreshData }) => {
     const [name, setName] = useState()
@@ -15,7 +16,7 @@ const AddExpenses = ({ budgetId, user, refreshData }) => {
             name: name,
             amount: amount,
             budgetId: budgetId,
-            createdAt: user?.primaryEmailAddress?.emailAddress,
+            createdAt: moment().format('DD/MM/YYYY'),
         }).returning({ insertedId: Budgets.id })
 
         if (result) {
