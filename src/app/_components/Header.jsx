@@ -28,7 +28,7 @@ export default function Header() {
           )
           :
             (<div className='flex gap-4 items-center'>
-                <Link href='/dashboard'>
+                <Link href='/sign-in'>
                     <Button variant='outline' className='rounded-full'>
                         Dashboard
                     </Button>

@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react'
-// import getFinancialAdvice from 'utils/getFinancialAdvice.js'
+
 import { 
     PiggyBank,
     ReceiptText, 
@@ -8,6 +8,7 @@ import {
     CircleDollarSign
  } from 'lucide-react'
 import formatNumber from '../../../../../utils';
+import getFinancialAdvice from '../../../../../utils/getFinancialAdvice';
 
 const CardInfo = ({budgetList, incomeList}) => {
   const [totalBudget, setTotalBudget] = useState(0);
@@ -21,15 +22,15 @@ const CardInfo = ({budgetList, incomeList}) => {
     }
   }, [budgetList, incomeList]);
 
-  // useEffect(() => {
-  //   if(totalBudget>0 || totalIncome>0 || totalSpent>0){
-  //     const fetchFinancialAdvice = async ()=> {
-  //       const advice = await getFinancialAdvice(totalBudget,totalIncome,totalSpent);
-  //       setFinancialAdvice(advice);
-  //     }
-  //     fetchFinancialAdvice();
-  //   }
-  // }, [totalBudget,totalIncome,totalSpent]);
+  useEffect(() => {
+    if(totalBudget>0 || totalIncome>0 || totalSpent>0){
+      const fetchFinancialAdvice = async ()=> {
+        const advice = await getFinancialAdvice(totalBudget,totalIncome,totalSpent);
+        setFinancialAdvice(advice);
+      }
+      fetchFinancialAdvice();
+    }
+  }, [totalBudget,totalIncome,totalSpent]);
 
   const CalculateCardInfo = () => {
     let totalBudget_ = 0;

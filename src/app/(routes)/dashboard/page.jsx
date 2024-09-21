@@ -6,6 +6,8 @@ import { eq, getTableColumns } from "drizzle-orm";
 import { Budgets, Expenses, Income } from "../../../../utils/schema";
 import { db } from "../../../../utils/dbConfig";
 import { sql, desc } from "drizzle-orm";
+import BudgetItem from "./budgets/_components/BudgetItem";
+import ExpenseListTable from "./expenses/_components/ExpenseListTable";
 
 
 
@@ -15,12 +17,14 @@ export default function Dashboard() {
   const [budgetList, setBudgetList] = useState([]);
   const [incomeList, setIncomeList] = useState([]);
   const [expenseList, setExpenseList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     user && getBudgetlist()
   }, [user]);
 
   const getBudgetlist = async () => {
+    setIsLoading(true);
     const result = await db.select({
       ...getTableColumns(Budgets),
       totalSpend: sql`sum(${Expenses.amount})`.mapWith(Number),
@@ -30,6 +34,7 @@ export default function Dashboard() {
       .groupBy(Budgets.id).orderBy(desc(Budgets.id));
 
     setBudgetList(result);
+    setIsLoading(false);
     getAllExpenses();
     getAllIncome();
   }
@@ -43,6 +48,7 @@ export default function Dashboard() {
     }).from(Budgets).rightJoin(Expenses, eq(Budgets.id, Expenses.budgetId))
       .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress))
       .orderBy(desc(Expenses.id));
+    console.log(result);
 
     setExpenseList(result);
   }
@@ -67,26 +73,33 @@ export default function Dashboard() {
 
       <CardInfo budgetList={budgetList} incomeList={incomeList} />
 
-      {/* <div className="grid grid-cols-1 lg:grid-cols-3 mt-6 gap-5">
-        <div className="lg:col-span-2">
-          <BarChart budgetList={budgetList} />
-          <ExpenseTable expenseList={expenseList} refreshData={() => getBudgetlist()} />
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 mt-6 gap-5">
+
+
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="lg:col-span-2">
+            <h2 className="font-bold text-lg mb-5">Latest Expenses</h2>
+            <ExpenseListTable expensesList={expenseList.slice(1,6)} refreshData={() => getBudgetlist()} />
+          </div>
+        )}
+
         <div className="grid gap-5">
           <h2 className="font-bold text-lg">Latest Budgets</h2>
           {budgetList?.length > 0 ?
-            budgetList.map((budget, index) => (
+            budgetList.slice(1,4).map((budget, index) => (
               <BudgetItem budget={budget} key={index} />
             ))
             :
             [1, 2, 3, 4].map((item, index) => (
-              <div
+              <div key={index}
                 className="h-[180xp] w-full
                bg-slate-200 rounded-lg animate-pulse"
               ></div>
-           ))}
+            ))}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

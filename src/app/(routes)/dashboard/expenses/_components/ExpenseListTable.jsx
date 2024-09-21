@@ -1,8 +1,20 @@
 import { Trash } from 'lucide-react'
 import React from 'react'
+import { db } from '../../../../../../utils/dbConfig'
+import { Expenses } from '../../../../../../utils/schema'
+import { eq } from 'drizzle-orm'
+import { toast } from 'sonner'
 
-const ExpenseListTable = ({ expensesList }) => {
-    console.log(expensesList);
+const ExpenseListTable = ({ expensesList, refreshData }) => {
+    const deleteExpense = async (expense)=>{
+        const result = await db.delete(Expenses)
+        .where(eq(Expenses.id,expense.id)).returning();
+
+        if(result){
+            toast('Expense Deleted!');
+            refreshData();
+        }
+    }
     
     return (
         <div className='mt-3'>
@@ -17,7 +29,8 @@ const ExpenseListTable = ({ expensesList }) => {
                     <h2>{expenses.name}</h2>
                     <h2>{expenses.amount}</h2>
                     <h2>{expenses.createdAt}</h2>
-                    <h2><Trash className='text-red-600'/></h2>
+                    <h2><Trash className='text-red-600 cursor-pointer'
+                    onClick={()=>deleteExpense(expenses)}/></h2>
                 </div>)
             )
         }
