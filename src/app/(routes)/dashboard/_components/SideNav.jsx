@@ -44,7 +44,7 @@ const SideNav = () => {
             id: 5,
             name: 'Upgrade',
             icon: ShieldCheck,
-            path: '/dashboard/upgrade',
+            path: '/dashboard/upgrades',
         },
     ];
 

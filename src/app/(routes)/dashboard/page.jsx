@@ -57,7 +57,7 @@ export default function Dashboard() {
     try {
       const result = await db.select({
         ...getTableColumns(Income),
-        totalAmount: sql`sum(cast(${Income.amount} as numeric()))`.mapWith(Number)
+        totalAmount: sql`sum(cast(${Income.amount} as numeric))`.mapWith(Number)
       }).from(Income).groupBy(Income.id)
 
       setIncomeList(result)
