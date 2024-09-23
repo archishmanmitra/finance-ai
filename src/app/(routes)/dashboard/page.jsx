@@ -58,7 +58,7 @@ export default function Dashboard() {
       const result = await db.select({
         ...getTableColumns(Income),
         totalAmount: sql`sum(cast(${Income.amount} as numeric))`.mapWith(Number)
-      }).from(Income).groupBy(Income.id)
+      }).from(Income).where(eq(Income.createdBy, user?.primaryEmailAddress?.emailAddress)).groupBy(Income.id)
 
       setIncomeList(result)
     } catch (error) {
