@@ -81,14 +81,14 @@ export default function Dashboard() {
         ) : (
           <div className="lg:col-span-2">
             <h2 className="font-bold text-lg mb-5">Latest Expenses</h2>
-            <ExpenseListTable expensesList={expenseList.slice(1,6)} refreshData={() => getBudgetlist()} />
+            <ExpenseListTable expensesList={expenseList.slice(0,6)} refreshData={() => getBudgetlist()} />
           </div>
         )}
 
         <div className="grid gap-5">
           <h2 className="font-bold text-lg">Latest Budgets</h2>
           {budgetList?.length > 0 ?
-            budgetList.slice(1,4).map((budget, index) => (
+            budgetList.slice(0,4).map((budget, index) => (
               <BudgetItem budget={budget} key={index} />
             ))
             :
