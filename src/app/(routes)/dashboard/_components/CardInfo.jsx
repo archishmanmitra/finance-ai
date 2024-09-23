@@ -9,6 +9,7 @@ import {
  } from 'lucide-react'
 import formatNumber from '../../../../../utils';
 import getFinancialAdvice from '../../../../../utils/getFinancialAdvice';
+import Image from 'next/image';
 
 const CardInfo = ({budgetList, incomeList}) => {
   const [totalBudget, setTotalBudget] = useState(0);
@@ -22,15 +23,15 @@ const CardInfo = ({budgetList, incomeList}) => {
     }
   }, [budgetList, incomeList]);
 
-  // useEffect(() => {
-  //   if(totalBudget>0 || totalIncome>0 || totalSpent>0){
-  //     const fetchFinancialAdvice = async ()=> {
-  //       const advice = await getFinancialAdvice(totalBudget,totalIncome,totalSpent);
-  //       setFinancialAdvice(advice);
-  //     }
-  //     fetchFinancialAdvice();
-  //   }
-  // }, [totalBudget,totalIncome,totalSpent]);
+  useEffect(() => {
+    if(totalBudget>0 || totalIncome>0 || totalSpent>0){
+      const fetchFinancialAdvice = async ()=> {
+        const advice = await getFinancialAdvice(totalBudget,totalIncome,totalSpent);
+        setFinancialAdvice(advice);
+      }
+      fetchFinancialAdvice();
+    }
+  }, [totalBudget,totalIncome,totalSpent]);
 
   const CalculateCardInfo = () => {
     let totalBudget_ = 0;
@@ -56,15 +57,15 @@ const CardInfo = ({budgetList, incomeList}) => {
       { budgetList?.length>0 ? (
         <div> 
           {/* AI Section */}
-          {/* <div className='border rounded-2xl p-7 flex items-center justify-center mt-4 -mb-1'>
+          <div className='border rounded-2xl p-7 flex items-center justify-center mt-4 -mb-1'>
             <div>
               <div className='flex mb-2 items-center space-x-1'>
                 <h2 className='text-base font-semibold'>AI Adviser</h2>
-                <Sparkles className='rounded-full text-white w-10 h-10'/>
+                <Image src='/ai_logo.svg' alt='ai_logo' height={25} width={25}/>
               </div>
               <h2 className='text-base font-light'>{financialAdvice || "Loading..."}</h2>
             </div>
-          </div> */}
+          </div>
           {/* Card Section */}
           <div className='mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
             <div className="flex items-center justify-between p-7 border rounded-2xl">
