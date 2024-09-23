@@ -48,7 +48,7 @@ const CreateIncome = ({refreshData}) => {
       <Dialog>
         <DialogTrigger asChild>
           <div
-            className="bg-slate-100 p-10 rounded-md
+            className="bg-slate-100 p-7 rounded-md
             items-center flex flex-col border-2 border-dashed
             cursor-pointer hover:shadow-md"
           >

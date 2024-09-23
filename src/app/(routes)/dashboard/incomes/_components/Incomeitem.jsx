@@ -4,7 +4,7 @@ const Incomeitem = ({budget}) => {
    
   return (
     <div
-      className="p-5 border rounded-2xl
+      className="p-5 pb-7 border rounded-2xl
     hover:shadow-md cursor-pointer "
     >
       <div className="flex gap-2 items-center justify-between">
